@@ -1,46 +1,52 @@
 module.exports = function(sensors) {
-  var inUse = false;
+  var inuse = false;
   var display = sensors.display;
   var autorefresh;
 
-  var screenBuffer = [];
+  var screenbuffer = [];
 
   /* stores screen color */
-  var screenColor = {
+  var screencolor = {
     'red': 50,
     'green': 50,
     'blue': 50
   };
 
+  var notificationled = false;
+
   var use = function() {
     refresh();
-    autorefresh = setInterval(refresh, 5000);
+    autorefresh = setinterval(refresh, 5000);
   }
 
-  /*  */
-  var getDisplay = function() {
+  /**
+   * copies and return display parameters (screen color, text, notification led on/off)
+   * @returns {object} - display parameters
+   */
+  var getdisplay = function() {
     return {
-      'screenColor': screenColor,
-      'screenBuffer': screenBuffer
+      'screencolor': {red: screencolor.red, green: screencolor.green, blue: screencolor.blue },
+      'screenbuffer': [screenbuffer[0], screenbuffer[1]],
+      'notificationled': notificationled
     }
   }
 
   var destroy = function() {
-    clearInterval(autorefresh);
+    clearinterval(autorefresh);
   };
 
   var refresh = function() {
     var temp = sensors.thermometer.value();
     var light = sensors.lightmeter.value();
 
-    screenBuffer[0] = 'Temp:  ' + temp + 'C';
-    screenBuffer[1] = 'Light: ' + light+ 'Lux';
+    screenbuffer[0] = 'temp:  ' + temp + 'c';
+    screenbuffer[1] = 'light: ' + light+ 'lux';
   }
 
   return {
-    'name': 'Local Environment',
+    'name': 'local environment',
     'use': use,
-    'getDisplay': getDisplay,
+    'getdisplay': getdisplay,
     'destroy': destroy
   }
 }
