@@ -40,6 +40,7 @@ var eventLoop = function() {
 }
 
 setInterval(eventLoop, 200);
+setInterval(refreshDisplay, 200);
 
 mainEventEmitter.on('buttonPressed', nextModule);
 
