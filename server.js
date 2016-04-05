@@ -1,3 +1,6 @@
+var express = require('express');
+var app = express();
+
 var EventEmitter = require('events').EventEmitter;
 var lcd = require('jsupm_i2clcd');
 var groveLib = require('jsupm_grove');
@@ -17,6 +20,7 @@ var sensors = {
 
 /* Modules need to be registered here */
 var modules = [
+  require('./server/modules/rest-display/index.js')(sensors),
   require('./server/modules/bus-monitor/index.js')(sensors),
   require('./server/modules/local-environment/index.js')(sensors),
   require('./server/modules/network-info/index.js')(sensors)
@@ -81,3 +85,5 @@ display.clear = function() {
   display.write('                ');
   display.setCursor(0, 0);
 }
+
+app.listen(8080);
