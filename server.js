@@ -2,7 +2,7 @@ var express = require('express');
 var bodyparser = require('body-parser');
 var app = express();
 app.use(bodyparser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyparser.urlencoded({ extended: true }));
 
 var EventEmitter = require('events').EventEmitter;
 var lcd = require('jsupm_i2clcd');
