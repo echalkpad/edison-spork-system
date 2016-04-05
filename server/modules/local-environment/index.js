@@ -48,7 +48,7 @@ module.exports = function(sensors) {
   return {
     'name': 'Local environment monitor',
     'use': use,
-    'getdisplay': getdisplay,
+    'getDisplay': getDisplay,
     'destroy': destroy
   }
 }
