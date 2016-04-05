@@ -47,6 +47,7 @@ module.exports = function(sensors) {
     'name': 'Network Info',
     'load': load,
     'getDisplay': getDisplay,
-    'destroy': destroy
+    'destroy': destroy,
+    'router': router
   }
 }

@@ -1,7 +1,5 @@
 var express = require('express');
 var app = express();
-// Start HTTP Server on port 8080
-app.listen(8080);
 
 var EventEmitter = require('events').EventEmitter;
 var lcd = require('jsupm_i2clcd');
@@ -22,10 +20,10 @@ var sensors = {
 
 /* Modules need to be registered here */
 var modules = [
-  require('./server/modules/rest-display/index.js')(sensors),
+  require('./server/modules/network-info/index.js')(sensors),
   require('./server/modules/bus-monitor/index.js')(sensors),
   require('./server/modules/local-environment/index.js')(sensors),
-  require('./server/modules/network-info/index.js')(sensors)
+  require('./server/modules/rest-display/index.js')(sensors)
 ];
 
 /* Stores Index of the current module in modules[] */
@@ -87,3 +85,7 @@ display.clear = function() {
   display.write('                ');
   display.setCursor(0, 0);
 }
+
+// Start HTTP Server on port 8080
+app.listen(8080);
+app.use('/apidemo', modules[3].router);
