@@ -31,12 +31,11 @@ module.exports = function(sensors) {
   });
 
   router.post('/display', function(req, res) {
-    console.log(req.body);
     screenbuffer[0] = req.body.display0;
     screenbuffer[1] = req.body.display1;
-    screencolor.red = (req.body['color.red'] == undefined ? 50 : screencolor.red);
-    screencolor.green = (req.body['color.green'] == undefined ? 50 : screencolor.green);
-    screencolor.blue = (req.body['color.blue'] == undefined ? 50 : screencolor.blue);
+    screencolor.red = (req.body['color.red'] ? 50 : parseInt(screencolor.red));
+    screencolor.green = (req.body['color.green'] ? 50 : parseInt(screencolor.green));
+    screencolor.blue = (req.body['color.blue'] ? 50 : parseInt(screencolor.blue));
     res.status(200).send();
   });
 
@@ -45,7 +44,6 @@ module.exports = function(sensors) {
    * @returns {object} - display parameters
    */
   var getDisplay = function() {
-    console.log(notificationled);
     return {
       'screencolor': {red: screencolor.red, green: screencolor.green, blue: screencolor.blue },
       'screenbuffer': [screenbuffer[0], screenbuffer[1]],
