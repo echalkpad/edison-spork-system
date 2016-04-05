@@ -43,7 +43,9 @@ setInterval(refreshDisplay, 1000);
 
 mainEventEmitter.on('buttonPressed', nextModule);
 
-modules[currentModuleIndex].load();
+for (var i = 0; i < modules.length; i++) {
+  modules[i].load();
+}
 
 /* Cycles to the next module */
 function nextModule() {
@@ -51,7 +53,6 @@ function nextModule() {
   if (currentModuleIndex == modules.length) {
     currentModuleIndex = 0;
   }
-  modules[currentModuleIndex].load();
 }
 
 function refreshDisplay() {
