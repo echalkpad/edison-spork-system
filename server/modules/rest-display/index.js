@@ -32,11 +32,11 @@ module.exports = function(sensors) {
 
   router.post('/display', function(req, res) {
     console.log(req.body);
-    screenbuffer[0] = req.data.display0;
-    screenbuffer[1] = req.data.display1;
-    screencolor.red = (req.data.color.red === undefined ? 50 : screencolor.red);
-    screencolor.green = (req.data.color.green === undefined ? 50 : screencolor.green);
-    screencolor.blue = (req.data.color.blue === undefined ? 50 : screencolor.blue);
+    screenbuffer[0] = req.body.display0;
+    screenbuffer[1] = req.body.display1;
+    screencolor.red = (req.body.color.red === undefined ? 50 : screencolor.red);
+    screencolor.green = (req.body.color.green === undefined ? 50 : screencolor.green);
+    screencolor.blue = (req.body.color.blue === undefined ? 50 : screencolor.blue);
   });
 
   /**
