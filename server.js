@@ -11,10 +11,8 @@ var led = new groveLib.GroveLed(5);
 
 /* List of sensors exposed to external modules */
 var sensors = {
-  'display': display,
   'thermometer': temp,
-  'lightmeter': light,
-  'led': led
+  'lightmeter': light
 }
 
 /* Modules need to be registered here */
@@ -56,6 +54,7 @@ function nextModule() {
 }
 
 function refreshDisplay() {
+  display.clear();
   var screenParams = modules[currentModuleIndex].getDisplay();
   display.setCursor(0, 0);
   display.write(screenParams.screenbuffer[0]);
