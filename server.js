@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+// Start HTTP Server on port 8080
+app.listen(8080);
 
 var EventEmitter = require('events').EventEmitter;
 var lcd = require('jsupm_i2clcd');
@@ -85,5 +87,3 @@ display.clear = function() {
   display.write('                ');
   display.setCursor(0, 0);
 }
-
-app.listen(8080);
