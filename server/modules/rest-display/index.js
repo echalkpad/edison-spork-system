@@ -17,7 +17,7 @@ module.exports = function(sensors) {
 
   // Mini REST Api
   router.post('/led/:val', function(req, res) {
-    if (req.params.val === 1) {
+    if (req.params.val == 1) {
       notificationled = true;
     } else notificationled = false;
     res.status(200).send();
@@ -40,6 +40,7 @@ module.exports = function(sensors) {
    * @returns {object} - display parameters
    */
   var getDisplay = function() {
+    console.log(notificationled);
     return {
       'screencolor': {red: screencolor.red, green: screencolor.green, blue: screencolor.blue },
       'screenbuffer': [screenbuffer[0], screenbuffer[1]],
