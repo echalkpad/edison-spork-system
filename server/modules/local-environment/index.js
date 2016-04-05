@@ -36,15 +36,17 @@ module.exports = function(sensors) {
   };
 
   var refresh = function() {
+    // update stored temp and light values
     var temp = sensors.thermometer.value();
     var light = sensors.lightmeter.value();
 
+    // Update screen buffer
     screenbuffer[0] = 'temp:  ' + temp + 'c';
     screenbuffer[1] = 'light: ' + light+ 'lux';
   }
 
   return {
-    'name': 'local environment',
+    'name': 'Local environment monitor',
     'use': use,
     'getdisplay': getdisplay,
     'destroy': destroy
