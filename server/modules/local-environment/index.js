@@ -1,6 +1,4 @@
 module.exports = function(sensors) {
-  var inuse = false;
-  var display = sensors.display;
   var autorefresh;
 
   var screenbuffer = [];
@@ -16,7 +14,7 @@ module.exports = function(sensors) {
 
   var load = function() {
     refresh();
-    autorefresh = setInterval(refresh, 5000);
+    autorefresh = setInterval(refresh, 1000);
   }
 
   /**
