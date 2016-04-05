@@ -23,7 +23,7 @@ module.exports = function(sensors) {
    * copies and return display parameters (screen color, text, notification led on/off)
    * @returns {object} - display parameters
    */
-  var getdisplay = function() {
+  var getDisplay = function() {
     return {
       'screencolor': {red: screencolor.red, green: screencolor.green, blue: screencolor.blue },
       'screenbuffer': [screenbuffer[0], screenbuffer[1]],

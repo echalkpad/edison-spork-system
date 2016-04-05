@@ -17,18 +17,22 @@ var sensors = {
   'led': led
 }
 
-/* Modules registered here */
+/* Modules need to be registered here */
 var modules = [
-  require('./server/module/bus-monitor/index.js')(sensors),
+//  require('./server/module/bus-monitor/index.js')(sensors),
   require('./server/module/local-environment/index.js')(sensors)
 ];
 
-var currentModule = 0;
+/* Stores Index of the current module in modules[] */
+var currentModuleIndex = 0;
 var previousButtonState = 0;
 var mainEventEmitter = new EventEmitter();
 
+/* Main loop
+ * Checks state of button and raises event on press
+ */
 var eventLoop = function() {
-  // modules[currentModule].listen(); // Call current module's event emitter
+  // modules[currentModuleIndex].listen(); // Call current module's event emitter
   if (button.value() == 1 && previousButtonState != 1) {
     mainEventEmitter.emit('buttonPressed');
   }
@@ -39,15 +43,23 @@ setInterval(eventLoop, 200);
 
 mainEventEmitter.on('buttonPressed', nextModule);
 
-modules[currentModule].use();
+modules[currentModuleIndex].load();
 
+/* Cycles to the next module */
 function nextModule() {
-  modules[currentModule].destroy();
-  currentModule++;
-  if (currentModule == modules.length) {
-    currentModule = 0;
+  currentModuleIndex++;
+  if (currentModuleIndex == modules.length) {
+    currentModuleIndex = 0;
   }
-  modules[currentModule].use();
+  modules[currentModuleIndex].load();
+}
+
+function refreshDisplay() {
+  var screenParams = modules[currentModuleIndex].getDisplay();
+  display.setCursor(0, 0);
+  display.write(screenParams.screenbuffer[0]);
+  display.setCursor(0, 1);
+  display.write(screenParams.screenbuffer[1]);
 }
 
 display.clear = function() {
