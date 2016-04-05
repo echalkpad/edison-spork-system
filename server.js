@@ -67,6 +67,10 @@ function refreshDisplay() {
   if (screenParams.screenbuffer[1]) {
     display.write(screenParams.screenbuffer[1]);
   }
+
+  if (screenParams.notificationled) {
+    led.on();
+  } else { led.off() }
 }
 
 display.clear = function() {

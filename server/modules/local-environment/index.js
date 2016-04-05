@@ -41,6 +41,10 @@ module.exports = function(sensors) {
     // Update screen buffer
     screenbuffer[0] = 'temp:  ' + temp + 'c';
     screenbuffer[1] = 'light: ' + light+ 'lux';
+
+    if (light < 10) {
+      notificationled = true;
+    }
   }
 
   return {
