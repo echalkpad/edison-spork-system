@@ -1,5 +1,8 @@
 var express = require('express');
+var bodyparser = require('body-parser');
 var router = express.Router();
+router.use(bodyparser.json());
+router.use(bodyparser.urlencoded({ extended: true }));
 
 module.exports = function(sensors) {
   var screenbuffer = [];
