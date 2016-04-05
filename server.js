@@ -20,7 +20,7 @@ var sensors = {
 /* Modules need to be registered here */
 var modules = [
 //  require('./server/module/bus-monitor/index.js')(sensors),
-  require('./server/module/local-environment/index.js')(sensors)
+  require('./server/modules/local-environment/index.js')(sensors)
 ];
 
 /* Stores Index of the current module in modules[] */
