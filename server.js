@@ -57,7 +57,7 @@ function nextModule() {
 function refreshDisplay() {
   display.clear();
   var screenParams = modules[currentModuleIndex].getDisplay();
-  display.setColor(screenParams.red, screenParams.green, screenParams.blue);
+  display.setColor(screenParams.screencolor.red, screenParams.screencolor.green, screenParams.screencolor.blue);
   // Should put this in a loop!
   display.setCursor(0, 0);
   if (screenParams.screenbuffer[0]) {
