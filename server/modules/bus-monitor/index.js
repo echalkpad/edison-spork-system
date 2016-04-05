@@ -1,45 +1,65 @@
 var rtpi = require('../../services/rtpi/rtpi.js');
 
 module.exports = function(sensors) {
-  var display = sensors.display;
   var autorefresh;
-  var inUse = false;
+  var screenbuffer = [];
+
+  /* stores screen color */
+  var screencolor = {
+    'red': 50,
+    'green': 50,
+    'blue': 50
+  };
+
+  var notificationled = false;
 
   /* Called when module gets loaded */
-  var use = function() {
-    inUse = true;
-    display.clear();
-    display.write('BUS MONITOR');
-    display.setColor(60, 60, 60);
+  var load = function() {
     refresh(241861);
     autorefresh = setInterval(refresh, 10000, 241861);
   }
 
   /* Called when module gets unloaded */
   var destroy = function() {
-    inUse = true;
     clearInterval(autorefresh);
-    sensors.led.off();
   }
 
   var refresh = function(stopid) {
     rtpi.getRealTimeData(stopid, '', 2, '', function(res) {
       var duetime;
-      if (inUse) {
-        if (res[0].duetime < 10) {
-          sensors.led.on();
-          display.setColor(0, 200, 20);
-        } else { sensors.led.off() }
+      if (res) {
+        if (res[0].duetime < 10 || res[0].duetime == "due") {
+          notificationled = true;
+          screencolor.red = 0;
+          screencolor.green = 200;
+          screencolor.blue = 20;
+        } else {
+          notificationled = false;
+          resetScreenColor();
+        }
 
         for (var i = 0; (i < res.length) && (i < 2); i++) {
-          display.setCursor(i, 0);
-          display.write('' + res[i].route + ' ' + res[i].destination);
-          display.setCursor(i, 10);
-          res[i].duetime < 10 ? duetime = ' ' + res[i].duetime : duetime = res[i].duetime;
-          display.write(' ' + duetime + 'min');
+          screenbuffer[i] = res[i].route + ' ' + res[i].destination;
+          res[i].duetime < 10  || res[i].duetime == 'due' ? duetime = ' ' + res[i].duetime : duetime = res[i].duetime;
+          screenbuffer[i] = screenbuffer[i].substring(0, 10) + ' ' + duetime;
+          if (duetime != 'due') {
+            screenbuffer[i] += 'min';
+          }
         }
+      } else {
+        screenbuffer[0] = "Real-time data";
+        screenbuffer[1] = "unavailable";
+        screencolor.red = 200;
+        screencolor.green = 0;
+        screencolor.blue = 0;
       }
     });
+  }
+
+  var resetScreenColor = function() {
+    screencolor.red = 50;
+    screencolor.green = 50;
+    screencolor.blue = 50;
   }
 
   return {

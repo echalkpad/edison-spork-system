@@ -17,7 +17,7 @@ var sensors = {
 
 /* Modules need to be registered here */
 var modules = [
-//  require('./server/module/bus-monitor/index.js')(sensors),
+  require('./server/module/bus-monitor/index.js')(sensors),
   require('./server/modules/local-environment/index.js')(sensors),
   require('./server/modules/network-info/index.js')(sensors)
 ];
@@ -71,8 +71,8 @@ function refreshDisplay() {
 
 display.clear = function() {
   display.setCursor(0, 0);
-  display.write('                ')
+  display.write('                ');
   display.setCursor(1, 0);
-  display.write('                ')
+  display.write('                ');
   display.setCursor(0, 0);
 }
