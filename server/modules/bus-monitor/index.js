@@ -15,6 +15,9 @@ module.exports = function(sensors) {
 
   /* Called when module gets loaded */
   var load = function() {
+    screenbuffer[0] = "REAL TIME BUS";
+    screenbuffer[1] = "INFORMATION";
+
     refresh(241861);
     autorefresh = setInterval(refresh, 10000, 241861);
   }
@@ -27,7 +30,7 @@ module.exports = function(sensors) {
   var refresh = function(stopid) {
     rtpi.getRealTimeData(stopid, '', 2, '', function(res) {
       var duetime;
-      if (res) {
+      if (res[0]) {
         if (res[0].duetime < 10 || res[0].duetime == "due") {
           notificationled = true;
           screencolor.red = 0;
