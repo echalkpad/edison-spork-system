@@ -56,6 +56,18 @@ module.exports = function(sensors) {
     });
   }
 
+  /**
+   * copies and return display parameters (screen color, text, notification led on/off)
+   * @returns {object} - display parameters
+   */
+  var getDisplay = function() {
+    return {
+      'screencolor': {red: screencolor.red, green: screencolor.green, blue: screencolor.blue },
+      'screenbuffer': [screenbuffer[0], screenbuffer[1]],
+      'notificationled': notificationled
+    }
+  }
+
   var resetScreenColor = function() {
     screencolor.red = 50;
     screencolor.green = 50;
@@ -64,7 +76,8 @@ module.exports = function(sensors) {
 
   return {
     'name': 'Bus monitor',
-    'use': use,
-    'destroy': destroy
+    'load': load,
+    'destroy': destroy,
+    'getDisplay': getDisplay
   }
 }
