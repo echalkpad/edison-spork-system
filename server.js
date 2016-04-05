@@ -40,7 +40,7 @@ var eventLoop = function() {
 }
 
 setInterval(eventLoop, 200);
-setInterval(refreshDisplay, 200);
+setInterval(refreshDisplay, 1000);
 
 mainEventEmitter.on('buttonPressed', nextModule);
 
@@ -59,7 +59,7 @@ function refreshDisplay() {
   var screenParams = modules[currentModuleIndex].getDisplay();
   display.setCursor(0, 0);
   display.write(screenParams.screenbuffer[0]);
-  display.setCursor(0, 1);
+  display.setCursor(1, 0);
   display.write(screenParams.screenbuffer[1]);
 }
 
