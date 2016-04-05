@@ -16,7 +16,7 @@ module.exports = function(sensors) {
 
   var load = function() {
     refresh();
-    autorefresh = setinterval(refresh, 5000);
+    autorefresh = setInterval(refresh, 5000);
   }
 
   /**
@@ -32,7 +32,7 @@ module.exports = function(sensors) {
   }
 
   var destroy = function() {
-    clearinterval(autorefresh);
+    clearInterval(autorefresh);
   };
 
   var refresh = function() {
