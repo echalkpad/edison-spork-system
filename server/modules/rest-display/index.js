@@ -28,6 +28,7 @@ module.exports = function(sensors) {
   });
 
   router.post('/display', function(req, res) {
+    console.log(req.body);
     screenbuffer[0] = req.data.display0;
     screenbuffer[1] = req.data.display1;
     screencolor.red = (req.data.color.red === undefined ? 50 : screencolor.red);
