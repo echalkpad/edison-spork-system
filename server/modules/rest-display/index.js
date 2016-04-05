@@ -16,10 +16,24 @@ module.exports = function(sensors) {
   var load = function() {}
 
   // Mini REST Api
-  router.get('/api/led/:val', function(req, res) {
-    console.log(req.params);
+  router.post('/led/:val', function(req, res) {
+    if (req.params.val === 1) {
+      notificationled = true;
+    } else notificationled = false;
     res.status(200).send();
-  })
+  });
+
+  router.get('/led', function(req, res) {
+    res.status(200).send(notificationled === true ? 1 : 0);
+  });
+
+  router.post('/display', function(req, res) {
+    screenbuffer[0] = req.data.display0;
+    screenbuffer[1] = req.data.display1;
+    screencolor.red = (req.data.color.red === undefined ? 50 : screencolor.red);
+    screencolor.green = (req.data.color.green === undefined ? 50 : screencolor.green);
+    screencolor.blue = (req.data.color.blue === undefined ? 50 : screencolor.blue);
+  });
 
   /**
    * copies and return display parameters (screen color, text, notification led on/off)

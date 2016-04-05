@@ -1,5 +1,7 @@
 var express = require('express');
+var bodyparser = require('body-parser');
 var app = express();
+app.use(bodyparser.json());
 
 var EventEmitter = require('events').EventEmitter;
 var lcd = require('jsupm_i2clcd');
