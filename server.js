@@ -12,13 +12,14 @@ var led = new groveLib.GroveLed(5);
 /* List of sensors exposed to external modules */
 var sensors = {
   'thermometer': temp,
-  'lightmeter': light
+  'lightmeter': light,
 }
 
 /* Modules need to be registered here */
 var modules = [
 //  require('./server/module/bus-monitor/index.js')(sensors),
-  require('./server/modules/local-environment/index.js')(sensors)
+  require('./server/modules/local-environment/index.js')(sensors),
+  require('./server/modules/network-info/index.js')(sensors)
 ];
 
 /* Stores Index of the current module in modules[] */
