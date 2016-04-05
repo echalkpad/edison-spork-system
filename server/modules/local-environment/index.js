@@ -14,7 +14,7 @@ module.exports = function(sensors) {
 
   var notificationled = false;
 
-  var use = function() {
+  var load = function() {
     refresh();
     autorefresh = setinterval(refresh, 5000);
   }
