@@ -44,6 +44,8 @@ module.exports = function(sensors) {
 
     if (light < 10) {
       notificationled = true;
+    } else {
+      notificationled = false;
     }
   }
 
