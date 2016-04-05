@@ -14,7 +14,7 @@ module.exports = function(sensors) {
 
   var load = function() {
     refresh();
-    autorefresh = setInterval(refresh, 1000);
+    autorefresh = setInterval(refresh, 10000);
   }
 
   /**
