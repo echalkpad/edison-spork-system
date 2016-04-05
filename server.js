@@ -57,10 +57,15 @@ function nextModule() {
 function refreshDisplay() {
   display.clear();
   var screenParams = modules[currentModuleIndex].getDisplay();
+  // Should put this in a loop!
   display.setCursor(0, 0);
-  display.write(screenParams.screenbuffer[0]);
+  if (screenParams.screenbuffer[0]) {
+    display.write(screenParams.screenbuffer[0]);
+  }
   display.setCursor(1, 0);
-  display.write(screenParams.screenbuffer[1]);
+  if (screenParams.screenbuffer[1]) {
+    display.write(screenParams.screenbuffer[1]);
+  }
 }
 
 display.clear = function() {
