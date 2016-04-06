@@ -91,4 +91,4 @@ display.clear = function() {
 
 // Start HTTP Server on port 8080
 app.listen(8080);
-app.use('/apidemo', modules[3].router);
+app.use('/apidemo', modules[2].router);
