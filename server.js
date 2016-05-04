@@ -1,6 +1,8 @@
 var express = require('express');
+var mqtt = require('mqtt');
 var bodyparser = require('body-parser');
 var app = express();
+
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
@@ -15,7 +17,9 @@ var light = new groveLib.GroveLight(3);
 var button = new groveLib.GroveButton(2);
 var led = new groveLib.GroveLed(5);
 
-/* List of sensors exposed to external modules */
+var mqttClient = mqtt.connect('mqtt://localhost:1883');
+
+/* List of sensors exposed to modules */
 var sensors = {
   'thermometer': temp,
   'lightmeter': light,
@@ -23,10 +27,10 @@ var sensors = {
 
 /* Modules need to be registered here */
 var modules = [
-  require('./server/modules/network-info/index.js')(sensors),
-//  require('./server/modules/bus-monitor/index.js')(sensors),
-  require('./server/modules/local-environment/index.js')(sensors),
-  require('./server/modules/rest-display/index.js')(sensors)
+  require('./server/modules/network-info/index.js')(sensors, mqttClient),
+  require('./server/modules/bus-monitor/index.js')(sensors, mqttClient), // Not working anymore ... API Returns HTTP 403
+  require('./server/modules/local-environment/index.js')(sensors, mqttClient),
+  require('./server/modules/rest-display/index.js')(sensors, mqttClient)
 ];
 
 /* Stores Index of the current module in modules[] */
@@ -50,6 +54,7 @@ setInterval(refreshDisplay, 1000);
 
 mainEventEmitter.on('buttonPressed', nextModule);
 
+/* Loop to init the modules */
 for (var i = 0; i < modules.length; i++) {
   modules[i].load();
 }
@@ -62,11 +67,14 @@ function nextModule() {
   }
 }
 
+/**
+ * Sets display to buffer of current module
+ */
 function refreshDisplay() {
   display.clear();
   var screenParams = modules[currentModuleIndex].getDisplay();
   display.setColor(screenParams.screencolor.red, screenParams.screencolor.green, screenParams.screencolor.blue);
-  // Should put this in a loop!
+
   display.setCursor(0, 0);
   if (screenParams.screenbuffer[0]) {
     display.write(screenParams.screenbuffer[0]);
@@ -81,6 +89,7 @@ function refreshDisplay() {
   } else { led.off() }
 }
 
+/* Add clear function to the display */
 display.clear = function() {
   display.setCursor(0, 0);
   display.write('                ');

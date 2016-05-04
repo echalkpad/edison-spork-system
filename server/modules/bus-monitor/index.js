@@ -1,6 +1,6 @@
 var rtpi = require('../../services/rtpi/rtpi.js');
 
-module.exports = function(sensors) {
+module.exports = function(sensors, mqttClient) {
   var autorefresh;
   var screenbuffer = [];
 
@@ -20,6 +20,11 @@ module.exports = function(sensors) {
 
     refresh(241861);
     autorefresh = setInterval(refresh, 10000, 241861);
+
+    mqttClient.subscribe('test');
+    mqttClient.on('connect', function(topic, message) {
+      console.log(topic + " -- " + message);
+    })
   }
 
   /* Called when module gets unloaded */
