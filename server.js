@@ -30,7 +30,7 @@ var modules = [
   require('./server/modules/network-info/index.js')(sensors, mqttClient),
   require('./server/modules/bus-monitor/index.js')(sensors, mqttClient), // Not working anymore ... API Returns HTTP 403
   require('./server/modules/local-environment/index.js')(sensors, mqttClient),
-  require('./server/modules/rest-display/index.js')(sensors, mqttClient)
+  require('./server/modules/rest-display/index.js')(sensors, mqttClient),
   require('./server/modules/mqtt-display/index.js')(sensors, mqttClient)
 ];
 
