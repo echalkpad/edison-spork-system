@@ -19,10 +19,11 @@ module.exports = function(sensors, mqttClient) {
   var load = function() {
     mqttClient.on('message', function(topic, message) {
       if (topic === 'led') {
-        message === 'on' ? notificationled = true : notificationled = false;
+        message.toString('ascii') === 'on' ? notificationled = true : notificationled = false;
       } else if (topic === 'display') {
-        screenbuffer[0] = message;
+        screenbuffer[0] = message.toString('ascii');
       }
+      screenbuffer[0] = "MQTT Light";
     });
   }
 
