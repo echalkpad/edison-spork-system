@@ -53,7 +53,7 @@ module.exports = function(sensors, mqttClient) {
 
           // Publish message to broker
 
-          mqttClient.publish('bus-monitor', JSON.stringify({route: res[i].route, duetime: duetime});
+          mqttClient.publish('bus-monitor', JSON.stringify({route: res[i].route, duetime: duetime}));
           if (duetime != 'due') {
             screenbuffer[i] += 'min';
           }
