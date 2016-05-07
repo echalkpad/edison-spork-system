@@ -1,6 +1,6 @@
 module.exports = function(sensors, mqttClient) {
-  var autorefresh;
 
+  /* Contains line 1 and 2 to display on screen */
   var screenbuffer = [];
 
   /* stores screen color */
@@ -10,11 +10,20 @@ module.exports = function(sensors, mqttClient) {
     'blue': 50
   };
 
+  /* If true, will light up the led */
   var notificationled = false;
 
+  /**
+   * Executed at the start of the app
+   */
   var load = function() {
-    refresh();
-    autorefresh = setInterval(refresh, 10000);
+    mqttClient.on('message', function(topic, message) {
+      if (topic === 'led') {
+        message === 'on' ? notificationled = true : notificationled = false;
+      } else if (topic === 'display') {
+        screenbuffer[0] = message;
+      }
+    });
   }
 
   /**
@@ -29,30 +38,18 @@ module.exports = function(sensors, mqttClient) {
     }
   }
 
+  /**
+   * copies and return display parameters (screen color, text, notification led on/off)
+   * @returns {object} - display parameters
+   */
   var destroy = function() {
     clearInterval(autorefresh);
   };
 
-  var refresh = function() {
-    // update stored temp and light values
-    var temp = sensors.thermometer.value();
-    var light = sensors.lightmeter.value();
-
-    mqttClient.publish('local-env', JSON.stringify({'temperature': temp, 'light': light}));
-
-    // Update screen buffer
-    screenbuffer[0] = 'temp:  ' + temp + 'c';
-    screenbuffer[1] = 'light: ' + light+ 'lux';
-
-    if (light < 10) {
-      notificationled = true;
-    } else {
-      notificationled = false;
-    }
-  }
+  var refresh = function() {}
 
   return {
-    'name': 'Local environment monitor',
+    'name': 'Module Name',
     'load': load,
     'getDisplay': getDisplay,
     'destroy': destroy

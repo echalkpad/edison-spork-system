@@ -17,7 +17,7 @@ var light = new groveLib.GroveLight(3);
 var button = new groveLib.GroveButton(2);
 var led = new groveLib.GroveLed(5);
 
-var mqttClient = mqtt.connect('mqtt://localhost:1883');
+var mqttClient = mqtt.connect('mqtt://127.0.0.1', {port: 1883});
 
 /* List of sensors exposed to modules */
 var sensors = {
