@@ -17,6 +17,8 @@ module.exports = function(sensors, mqttClient) {
    * Executed at the start of the app
    */
   var load = function() {
+    mqttClient.subscribe('led');
+    mqttClient.subscribe('display');
     mqttClient.on('message', function(topic, message) {
       if (topic === 'led') {
         message.toString('ascii') === 'on' ? notificationled = true : notificationled = false;
