@@ -9,6 +9,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 var EventEmitter = require('events').EventEmitter;
 var lcd = require('jsupm_i2clcd');
 var groveLib = require('jsupm_grove');
+var config = require('./config');
 
 /* Load sensors */
 var display = new lcd.Jhd1313m1(0, 0x3E, 0x62);
@@ -17,7 +18,11 @@ var light = new groveLib.GroveLight(3);
 var button = new groveLib.GroveButton(2);
 var led = new groveLib.GroveLed(5);
 
-var mqttClient = mqtt.connect('mqtt://127.0.0.1', {port: 1883});
+var mqttClient = mqtt.connect('mqtt://127.0.0.1', {
+  port: 1883,
+  username: config.mosquitto_user,
+  password: config.mosquitto_password
+});
 
 /* List of sensors exposed to modules */
 var sensors = {
