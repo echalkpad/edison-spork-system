@@ -9,7 +9,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 var EventEmitter = require('events').EventEmitter;
 var lcd = require('jsupm_i2clcd');
 var groveLib = require('jsupm_grove');
-var config = require('./config');
+var config = require('./config/config.js');
 
 /* Load sensors */
 var display = new lcd.Jhd1313m1(0, 0x3E, 0x62);
