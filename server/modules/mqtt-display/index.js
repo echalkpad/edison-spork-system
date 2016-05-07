@@ -17,6 +17,7 @@ module.exports = function(sensors, mqttClient) {
    * Executed at the start of the app
    */
   var load = function() {
+    screenbuffer[0] = "MQTT Light";
     mqttClient.subscribe('led');
     mqttClient.subscribe('display');
     mqttClient.on('message', function(topic, message) {
@@ -25,7 +26,6 @@ module.exports = function(sensors, mqttClient) {
       } else if (topic === 'display') {
         screenbuffer[0] = message.toString('ascii');
       }
-      screenbuffer[0] = "MQTT Light";
     });
   }
 
