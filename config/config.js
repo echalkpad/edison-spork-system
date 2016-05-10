@@ -1,1 +1,4 @@
-module.exports = require('./env/' + process.env.NODE_ENV + '.js');
+module.exports = {
+  mosquitto_user: "spork",
+  mosquitto_password: "password"
+}
