@@ -56,7 +56,7 @@ module.exports = function(sensors, mqttClient) {
         }
 
         // Publish message to broker
-        mqttClient.publish('bus-monitor', JSON.stringify({route: res[0].route, duetime: res[i].duetime}));
+        mqttClient.publish('bus-monitor', JSON.stringify({route: res[0].route, duetime: res[0].duetime}));
 
       } else {
         screenbuffer[0] = "Real-time data";
