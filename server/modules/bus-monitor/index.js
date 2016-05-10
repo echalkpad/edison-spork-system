@@ -22,9 +22,6 @@ module.exports = function(sensors, mqttClient) {
     autorefresh = setInterval(refresh, 10000, 241861);
 
     mqttClient.subscribe('bus-monitor');
-    mqttClient.on('message', function(topic, message) {
-      console.log(topic + " -- " + message);
-    })
   }
 
   /* Called when module gets unloaded */
@@ -46,19 +43,20 @@ module.exports = function(sensors, mqttClient) {
           resetScreenColor();
         }
 
+        // Set display to 2 closest buses
         for (var i = 0; (i < res.length) && (i < 2); i++) {
           screenbuffer[i] = res[i].route + ' ' + res[i].destination;
           res[i].duetime < 10  || res[i].duetime == 'due' ? duetime = ' ' + res[i].duetime : duetime = res[i].duetime;
           screenbuffer[i] = screenbuffer[i].substring(0, 10) + ' ' + duetime;
 
-          // Publish message to broker
-
-          mqttClient.publish('bus-monitor', JSON.stringify({route: res[i].route, duetime: duetime}));
           if (duetime != 'due') {
             screenbuffer[i] += 'min';
           }
 
         }
+
+        // Publish message to broker
+        mqttClient.publish('bus-monitor', JSON.stringify({route: res[0].route, duetime: res[i].duetime}));
 
       } else {
         screenbuffer[0] = "Real-time data";
